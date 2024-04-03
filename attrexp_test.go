@@ -21,6 +21,15 @@ func ExampleParseAttrExp_sw() {
 	// userName sw "J" <nil>
 }
 
+func TestExtendableOperators(t *testing.T) {
+	grammar.AllowedOperators = append(grammar.AllowedOperators, "mp", "mpp")
+	input := "name mp \"test me\""
+	expr, err := ParseFilter([]byte(input))
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println("expr: ", expr)
+}
 func TestParseNumber(t *testing.T) {
 	for _, test := range []struct {
 		nStr     string

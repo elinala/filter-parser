@@ -7,6 +7,17 @@ import (
 	"github.com/scim2/filter-parser/v2/internal/types"
 )
 
+var AllowedOperators = []string{"eq", "ne", "co", "sw", "ew", "gt", "lt", "ge", "le"} //can be extended with custom operators like "mp" and "mpp"
+
+func OpOrFromAllowedOperators() op.Or {
+	var or op.Or
+	for _, a := range AllowedOperators {
+		or = append(or, parser.CheckStringCI(a))
+	}
+
+	return or
+}
+
 func AttrExp(p *ast.Parser) (*ast.Node, error) {
 	return p.Expect(ast.Capture{
 		Type:        typ.AttrExp,
@@ -54,7 +65,7 @@ func CompareOp(p *ast.Parser) (*ast.Node, error) {
 	return p.Expect(ast.Capture{
 		Type:        typ.CompareOp,
 		TypeStrings: typ.Stringer,
-		Value: op.Or{
+		Value:/*op.Or{
 			parser.CheckStringCI("eq"),
 			parser.CheckStringCI("ne"),
 			parser.CheckStringCI("co"),
@@ -64,7 +75,8 @@ func CompareOp(p *ast.Parser) (*ast.Node, error) {
 			parser.CheckStringCI("lt"),
 			parser.CheckStringCI("ge"),
 			parser.CheckStringCI("le"),
-		},
+		},*/
+		OpOrFromAllowedOperators(),
 	})
 }
 
