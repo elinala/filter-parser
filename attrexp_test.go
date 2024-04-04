@@ -22,7 +22,7 @@ func ExampleParseAttrExp_sw() {
 }
 
 func TestExtendableOperators(t *testing.T) {
-	grammar.AllowedOperators = append(grammar.AllowedOperators, "mp", "mpp")
+	ExtendAllowedOperators("mp", "mpp")
 	input := "name mp \"test me\""
 	expr, err := ParseFilter([]byte(input))
 	if err != nil {

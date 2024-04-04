@@ -11,6 +11,10 @@ import (
 	"strings"
 )
 
+func ExtendAllowedOperators(ops ...string) {
+	grammar.AllowedOperators = append(grammar.AllowedOperators, ops...)
+}
+
 // ParseAttrExp parses the given raw data as an AttributeExpression.
 func ParseAttrExp(raw []byte) (AttributeExpression, error) {
 	return parseAttrExp(raw, config{})
